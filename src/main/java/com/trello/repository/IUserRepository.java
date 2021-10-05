@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findByUserName(String userName);
+
     User findByUserNameAndAndEmail(String userName, String email);
+
     @Query(value = "select * from user u " +
             "where u.username " +
             "like ?1 or u.nickname like ?1", nativeQuery = true)
