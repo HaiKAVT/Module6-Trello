@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BoardRepository extends JpaRepository<Board,Long> {
     Iterable<Board> findAllByOwner(User owner);
+    Iterable<Board> findByOwnerId(Long id);
 
     @Query(value = "select b.id, b.title, u.username as owner from board b join user u on b.owner_id = u.id " +
             "where b.owner_id = ?1 order by b.id desc", nativeQuery = true)
@@ -25,4 +26,5 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     Iterable<Board> findAllAvailableToSearcher(Long searcherId);
 
     Iterable<Board> findByType (String type);
+    Iterable<Board> findByTypeAndAndOwnerId (String type, Long id);
 }

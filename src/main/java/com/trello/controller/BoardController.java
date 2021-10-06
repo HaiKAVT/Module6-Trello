@@ -1,6 +1,7 @@
 package com.trello.controller;
 
 import com.trello.model.Board;
+import com.trello.model.SimpleBoard;
 import com.trello.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,12 @@ public class BoardController {
         Iterable<Board> boardIterable = boardService.findAllBoardByType(type);
         return new ResponseEntity<>(boardIterable,HttpStatus.OK);
     }
+        @GetMapping("/owned/{type}/{id}")
+    public ResponseEntity<Iterable<Board>> findAllByTypeAndUser(@PathVariable("type") String type,@PathVariable Long id){
+        Iterable<Board> boardIterable = boardService.findAllPrivateOwned(type,id);
+        return new ResponseEntity<>(boardIterable,HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Board> findById(@PathVariable Long id) {
         Optional<Board> boardOptional = boardService.findById(id);
@@ -68,6 +75,9 @@ public class BoardController {
         Iterable<Board> boardIterable = boardService.findAllAvailableToSearcher(searcherId);
         return new ResponseEntity<>(boardIterable, HttpStatus.OK);
     }
-
+    @GetMapping("/{userId}/owned-boards")
+    public ResponseEntity<Iterable<Board>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(boardService.findByOwner(userId), HttpStatus.OK);
+    }
 
 }

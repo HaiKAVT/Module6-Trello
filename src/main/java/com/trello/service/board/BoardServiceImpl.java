@@ -31,6 +31,10 @@ public class BoardServiceImpl implements BoardService {
     public Iterable<Board> findAllByOwner(User owner) {
         return iBoardRepository.findAllByOwner(owner);
     }
+    @Override
+    public Iterable<Board> findByOwner(Long id) {
+        return iBoardRepository.findByOwnerId(id);
+    }
 
     @Override
     public Iterable<SimpleBoard> findAllOwnedBoardsByUserId(Long userId) {
@@ -50,6 +54,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Iterable<Board> findAllBoardByType(String type) {
         return iBoardRepository.findByType(type);
+    }
+
+    @Override
+    public Iterable<Board> findAllPrivateOwned(String type, Long id) {
+        return iBoardRepository.findByTypeAndAndOwnerId(type, id);
     }
 
     @Override

@@ -8,8 +8,10 @@ import com.trello.service.GeneralService;
 public interface BoardService extends GeneralService<Board> {
     Board findByIdSort(Long id);
     Iterable<Board> findAllByOwner(User owner);
+    Iterable<Board> findByOwner(Long id);
     Iterable<SimpleBoard> findAllOwnedBoardsByUserId(Long userId);
     Iterable<SimpleBoard> findAllSharedBoardsByUserId(Long userId);
     Iterable<Board> findAllAvailableToSearcher(Long searcherId);
     Iterable<Board> findAllBoardByType(String type);
+    Iterable<Board> findAllPrivateOwned(String type, Long id);
 }
