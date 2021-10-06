@@ -2,7 +2,7 @@ package com.trello.service.user;
 
 import com.trello.model.User;
 import com.trello.model.UserPrincipal;
-import com.trello.repository.IUserRepository;
+import com.trello.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,12 +44,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUsername(userName);
     }
 
     @Override
     public User findByUsernameAndEmail(String username, String email) {
-        return userRepository.findByUserNameAndAndEmail(username,email);
+        return userRepository.findByUsernameAndAndEmail(username,email);
     }
 
     @Override
@@ -63,8 +63,18 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Boolean existsByUserName(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+        User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/users")
+@CrossOrigin("*")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -29,27 +29,38 @@ public class UserController {
         }
         return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
+
     @PostMapping("/recoverpassword")
     public ResponseEntity<User> findByUserNameAndNickName(@RequestBody User user) {
-        User userOptional = userService.findByUsernameAndEmail(user.getUserName(), user.getEmail());
+        User userOptional = userService.findByUsernameAndEmail(user.getUsername(), user.getEmail());
         return new ResponseEntity<>(userOptional, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<User> add(@RequestBody User user) {
-        user.setImage("https://i.pinimg.com/originals/a8/fd/19/a8fd1923197699ac71e0ad8439800a55.jpg");
-        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+//        user.setImage("");
+        if (userService.existsByUserName(user.getUsername())) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else if (userService.existsByEmail(user.getEmail())) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        user.setImage("https://i.pinimg.com/originals/57/fb/31/57fb3190d0cc1726d782c4e25e8561e9.png");
+            return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+
+
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
+    public ResponseEntity<User> update( @RequestBody User user) {
+        User user1 = userService.update(user);
+        return new ResponseEntity<>(user1, HttpStatus.OK);
     }
 
 
     @PutMapping("/{id}/recover")
-    public ResponseEntity<User> updateRecoveredUser(@PathVariable Long id, @RequestBody User user) {
-        return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
+    public ResponseEntity<User> updateRecoveredUser( @RequestBody User user) {
+        User user1 = userService.save(user);
+        return new ResponseEntity<>(user1, HttpStatus.OK);
     }
 
 
@@ -65,7 +76,8 @@ public class UserController {
 
     @GetMapping("/search/{keyword}")
     public ResponseEntity<Iterable<User>> findUserByKeyword(@PathVariable String keyword) {
-        return new ResponseEntity<>(userService.findUserByKeyword(keyword), HttpStatus.OK);
+        Iterable<User> userIterable = userService.findUserByKeyword(keyword);
+        return new ResponseEntity<>(userIterable, HttpStatus.OK);
     }
 
 }
