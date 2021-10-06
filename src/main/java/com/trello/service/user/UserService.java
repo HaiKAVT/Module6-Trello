@@ -9,4 +9,7 @@ public interface UserService extends GeneralService<User>, UserDetailsService {
     User findByUsernameAndEmail(String username, String email);
     Iterable<User> findUserByKeyword(String keyword);
     User update(User user);
+    Boolean existsByUserName(String username);
+    Boolean existsByEmail (String email);
+
 }
