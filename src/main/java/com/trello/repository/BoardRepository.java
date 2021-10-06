@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IBoardRepository extends JpaRepository<Board,Long> {
+public interface BoardRepository extends JpaRepository<Board,Long> {
     Iterable<Board> findAllByOwner(User owner);
 
     @Query(value = "select b.id, b.title, u.username as owner from board b join user u on b.owner_id = u.id " +

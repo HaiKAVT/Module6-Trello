@@ -1,8 +1,6 @@
 package com.trello.controller;
 
 import com.trello.model.Board;
-import com.trello.model.DetailedMember;
-import com.trello.model.Member;
 import com.trello.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +31,7 @@ public class BoardController {
         return new ResponseEntity<>(boardOptional.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/sorted")
+    @GetMapping("/sort/{id}")
     public ResponseEntity<Board> findByIdSorted(@PathVariable Long id) {
         return new ResponseEntity<>(boardService.findByIdSort(id), HttpStatus.OK);
     }
@@ -59,11 +57,12 @@ public class BoardController {
         boardService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("/available-to/{searcherId}")
     public ResponseEntity<Iterable<Board>> findAllAvailableToSearcher(@PathVariable Long searcherId) {
-        return new ResponseEntity<>(boardService.findAllAvailableToSearcher(searcherId), HttpStatus.OK);
+        Iterable<Board> boardIterable = boardService.findAllAvailableToSearcher(searcherId);
+        return new ResponseEntity<>(boardIterable, HttpStatus.OK);
     }
-
 
 
 }

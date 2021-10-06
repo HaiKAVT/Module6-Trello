@@ -2,7 +2,7 @@ package com.trello.service.user;
 
 import com.trello.model.User;
 import com.trello.model.UserPrincipal;
-import com.trello.repository.IUserRepository;
+import com.trello.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    private IUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

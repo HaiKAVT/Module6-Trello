@@ -1,7 +1,7 @@
 package com.trello.service.board;
 
 import com.trello.model.*;
-import com.trello.repository.IBoardRepository;
+import com.trello.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
-    IBoardRepository iBoardRepository;
+    BoardRepository iBoardRepository;
 
     @Override
     public Board findByIdSort(Long id) {
