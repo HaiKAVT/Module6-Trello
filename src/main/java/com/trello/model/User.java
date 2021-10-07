@@ -28,7 +28,10 @@ public class User {
     private String password;
     @Pattern(regexp = "^[a-zA-Z0-9]+@[a-z]+\\.[a-z]+$", message = "wrong email")
     private String email;
+
     private String image;
+
+    private int phone;
     @Size(min = 3,message = "nick name greater than 3")
     private String nickname;
 
