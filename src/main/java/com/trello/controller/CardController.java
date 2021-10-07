@@ -20,6 +20,7 @@ public class CardController {
     public ResponseEntity<Iterable<Card>> findAll() {
         return new ResponseEntity<>(cardService.findAll(), HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Card> findById(@PathVariable Long id) {
         Optional<Card> optionalColumn = cardService.findById(id);

@@ -40,10 +40,10 @@ public class UserPrincipal implements UserDetails {
 
         return new UserPrincipal(
                 user.getId(),
-                user.getUserName(),
+                user.getUsername(),
                 user.getPassword(),
                 user.getImage(),
-                user.getNickName(),
+                user.getNickname(),
                 authorities
         );
 

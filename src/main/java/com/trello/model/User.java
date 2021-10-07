@@ -22,7 +22,7 @@ public class User {
     @NotEmpty(message = "not null")
     @Size(min = 2,max = 10,message = "name > 2 and < 10")
     @Column(unique = true)
-    private String userName;
+    private String username;
     @NotEmpty(message = "not null")
     @Size(min = 6,message = "password greater than 6")
     private String password;
@@ -30,7 +30,7 @@ public class User {
     private String email;
     private String image;
     @Size(min = 3,message = "nick name greater than 3")
-    private String nickName;
+    private String nickname;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

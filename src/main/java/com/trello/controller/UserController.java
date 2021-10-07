@@ -32,14 +32,14 @@ public class UserController {
 
     @PostMapping("/recoverpassword")
     public ResponseEntity<User> findByUserNameAndNickName(@RequestBody User user) {
-        User userOptional = userService.findByUsernameAndEmail(user.getUserName(), user.getEmail());
+        User userOptional = userService.findByUsernameAndEmail(user.getUsername(), user.getEmail());
         return new ResponseEntity<>(userOptional, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<User> add(@RequestBody User user) {
 //        user.setImage("");
-        if (userService.existsByUserName(user.getUserName())) {
+        if (userService.existsByUsername(user.getUsername())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else if (userService.existsByEmail(user.getEmail())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
