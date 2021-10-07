@@ -34,7 +34,6 @@ public class User {
 
     private String image;
 
-    @NotEmpty
     private String nickname;
 
     private int phone;

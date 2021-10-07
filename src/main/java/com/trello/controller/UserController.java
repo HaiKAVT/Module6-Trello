@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> add(@RequestBody User user) {
-        user.setImage("https://i.pinimg.com/originals/a8/fd/19/a8fd1923197699ac71e0ad8439800a55.jpg");
+        user.setImage("https://firebasestorage.googleapis.com/v0/b/trello-h3k.appspot.com/o/h3k.png?alt=media&token=2f7182c6-69b5-47a5-a9ab-5e6ad9e7bd91");
         return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
     }
 
