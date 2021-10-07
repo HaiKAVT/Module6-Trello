@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
-    User findByUserName(String userName);
+    User findByUsername(String userName);
 
-    User findByUserNameAndAndEmail(String userName, String email);
+    User findByUsernameAndAndEmail(String userName, String email);
 
     @Query(value = "select * from user u " +
             "where u.username " +

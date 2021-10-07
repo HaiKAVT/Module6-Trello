@@ -44,12 +44,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+        return userRepository.findByUsername(userName);
     }
 
     @Override
     public User findByUsernameAndEmail(String username, String email) {
-        return userRepository.findByUserNameAndAndEmail(username,email);
+        return userRepository.findByUsernameAndAndEmail(username,email);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(username);
+        User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);
     }
 }
