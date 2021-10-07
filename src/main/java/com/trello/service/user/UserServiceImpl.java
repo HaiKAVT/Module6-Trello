@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean existsByUserName(String username) {
+    public Boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
 

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String userName);
-    User findByUsernameAndAndEmail(String userName, String email);
+    User findByUsername(String username);
+    User findByUsernameAndAndEmail(String username, String email);
     @Query(value = "select * from user u " + "where u.username " + "like ?1 or u.nickname like ?1", nativeQuery = true)
     Iterable<User> findUserByKeyword(String keyword);
 

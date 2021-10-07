@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> add(@RequestBody User user) {
 //        user.setImage("");
-        if (userService.existsByUserName(user.getUsername())) {
+        if (userService.existsByUsername(user.getUsername())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else if (userService.existsByEmail(user.getEmail())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -79,7 +79,5 @@ public class UserController {
         Iterable<User> userIterable = userService.findUserByKeyword(keyword);
         return new ResponseEntity<>(userIterable, HttpStatus.OK);
     }
-
-
 
 }
