@@ -9,8 +9,8 @@ import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "columns")
 public class Column implements Comparable<Column> {
     @Id

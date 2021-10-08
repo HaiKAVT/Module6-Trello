@@ -1,7 +1,7 @@
 package com.trello.service.board;
 
 import com.trello.model.*;
-import com.trello.repository.IBoardRepository;
+import com.trello.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,31 +11,11 @@ import java.util.Optional;
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
-    private IBoardRepository boardRepository;
+    BoardRepository iBoardRepository;
 
     @Override
-    public Iterable<Board> findAll() {
-        return boardRepository.findAll();
-    }
-
-    @Override
-    public Optional<Board> findById(Long id) {
-        return boardRepository.findById(id);
-    }
-
-    @Override
-    public Board save(Board board) {
-        return boardRepository.save(board);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        boardRepository.deleteById(id);
-    }
-
-    @Override
-    public Board findByIdSorted(Long id) {
-        Board board = boardRepository.findById(id).get();
+    public Board findByIdSort(Long id) {
+        Board board = iBoardRepository.findById(id).get();
         for (Column column : board.getColumns()) {
             for (Card card : column.getCards()) {
                 Collections.sort(card.getTags());
@@ -49,21 +29,55 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Iterable<Board> findAllByOwner(User owner) {
-        return boardRepository.findAllByOwner(owner);
+        return iBoardRepository.findAllByOwner(owner);
+    }
+    @Override
+    public Iterable<Board> findByOwner(Long id) {
+        return iBoardRepository.findByOwnerId(id);
     }
 
     @Override
     public Iterable<SimpleBoard> findAllOwnedBoardsByUserId(Long userId) {
-        return boardRepository.findAllOwnedBoardsByUserId(userId);
+        return iBoardRepository.findAllOwnedBoardsByUserId(userId);
     }
 
     @Override
     public Iterable<SimpleBoard> findAllSharedBoardsByUserId(Long userId) {
-        return boardRepository.findAllSharedBoardsByUserId(userId);
+        return iBoardRepository.findAllSharedBoardsByUserId(userId);
     }
 
     @Override
     public Iterable<Board> findAllAvailableToSearcher(Long searcherId) {
-        return boardRepository.findAllAvailableToSearcher(searcherId);
+        return iBoardRepository.findAllAvailableToSearcher(searcherId);
+    }
+
+    @Override
+    public Iterable<Board> findAllBoardByType(String type) {
+        return iBoardRepository.findByType(type);
+    }
+
+    @Override
+    public Iterable<Board> findAllPrivateOwned(String type, Long id) {
+        return iBoardRepository.findByTypeAndAndOwnerId(type, id);
+    }
+
+    @Override
+    public Iterable<Board> findAll() {
+        return iBoardRepository.findAll();
+    }
+
+    @Override
+    public Optional<Board> findById(Long id) {
+        return iBoardRepository.findById(id);
+    }
+
+    @Override
+    public Board save(Board board) {
+        return iBoardRepository.save(board);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        iBoardRepository.deleteById(id);
     }
 }

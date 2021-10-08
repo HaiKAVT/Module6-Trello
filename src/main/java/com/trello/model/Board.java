@@ -24,6 +24,9 @@ public class Board {
     private List<Column> columns;
     @ManyToMany
     private List<Tag> tags;
+    @NotEmpty
+    private String type;
+
 }
 
 
