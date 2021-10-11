@@ -20,6 +20,8 @@ public class Workspace {
 
     private String type;
 
+    private String privacy;
+
     @ManyToOne
     private User owner;
 
