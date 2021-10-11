@@ -1,8 +1,12 @@
 package com.trello.controller;
 
 import com.trello.model.Board;
+import com.trello.model.DetailedMember;
+import com.trello.model.Member;
 import com.trello.model.SimpleBoard;
 import com.trello.service.board.BoardService;
+import com.trello.service.member.IMemberService;
+import com.trello.service.workspaces.WorkspaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +55,9 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<Board> add(@RequestBody Board board) {
         Board savedBoard = boardService.save(board);
+        Member member = new Member(null, savedBoard.getOwner(), true, savedBoard);
+        Member savedMember = memberService.save(member);
+        System.out.println(savedMember);
         return new ResponseEntity<>(savedBoard, HttpStatus.CREATED);
     }
 
@@ -79,5 +86,18 @@ public class BoardController {
     public ResponseEntity<Iterable<Board>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(boardService.findByOwner(userId), HttpStatus.OK);
     }
+    @Autowired
+    private IMemberService memberService;
+    @GetMapping("/{id}/members")
+    public ResponseEntity<Iterable<DetailedMember>> findMembersByBoardId(@PathVariable Long id) {
+        return new ResponseEntity<>(memberService.getMembersByBoardId(id), HttpStatus.OK);
+    }
+    @Autowired
+    private WorkspaceService workspaceService;
+    @GetMapping("/{id}/is-in-workspace")
+    public ResponseEntity<Boolean> isBoardInWorkspace(@PathVariable Long id) {
+        return new ResponseEntity<>(workspaceService.isBoardInWorkspace(id), HttpStatus.OK);
+    }
+
 
 }
