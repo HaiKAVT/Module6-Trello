@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/recoverpassword")
-    public ResponseEntity<User> findByUserNameAndNickName(@RequestBody User user) {
+    public ResponseEntity<User> findByUserNameAndEmail(@RequestBody User user) {
         User userOptional = userService.findByUsernameAndEmail(user.getUsername(), user.getEmail());
         return new ResponseEntity<>(userOptional, HttpStatus.OK);
     }
