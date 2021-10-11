@@ -28,4 +28,6 @@ public class Workspace {
 
     @OneToMany
     private Set<Board> boards;
+
+    private String privacy;
 }
