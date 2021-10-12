@@ -9,24 +9,24 @@ import java.util.Optional;
 @Service
 public class RoleServiceImpl implements IRolesService{
     @Autowired
-    RoleRepository rolrrepository;
+    RoleRepository roleRepository;
     @Override
     public Iterable<Role> findAll() {
-        return rolrrepository.findAll();
+        return roleRepository.findAll();
     }
 
     @Override
     public Optional<Role> findById(Long id) {
-        return rolrrepository.findById(id);
+        return roleRepository.findById(id);
     }
 
     @Override
     public Role save(Role role) {
-        return rolrrepository.save(role);
+        return roleRepository.save(role);
     }
 
     @Override
     public void deleteById(Long id) {
-        rolrrepository.deleteById(id);
+        roleRepository.deleteById(id);
     }
 }
