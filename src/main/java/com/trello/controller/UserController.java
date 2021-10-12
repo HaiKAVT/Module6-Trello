@@ -83,6 +83,10 @@ public class UserController {
         return new ResponseEntity<>(userIterable, HttpStatus.OK);
     }
 
+//    @GetMapping("/search/{keyword}/{id}")
+//    public ResponseEntity<Iterable<User>> findUserByKeywordInWorkspace(@PathVariable String keyword, @PathVariable Long id){
+//
+//    }
 
     @GetMapping("/{userId}/owned-boards")
     public ResponseEntity<Iterable<SimpleBoard>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
