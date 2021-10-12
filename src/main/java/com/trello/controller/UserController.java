@@ -46,8 +46,6 @@ public class UserController {
         }
         user.setImage("https://i.pinimg.com/originals/57/fb/31/57fb3190d0cc1726d782c4e25e8561e9.png");
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
-
-
     }
 
     @PutMapping("/{id}")
