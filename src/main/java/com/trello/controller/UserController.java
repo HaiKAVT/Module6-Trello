@@ -1,5 +1,6 @@
 package com.trello.controller;
 
+import com.trello.model.MemberWorkspace;
 import com.trello.model.SimpleBoard;
 import com.trello.model.User;
 import com.trello.service.board.BoardService;
@@ -83,11 +84,6 @@ public class UserController {
         return new ResponseEntity<>(userIterable, HttpStatus.OK);
     }
 
-//    @GetMapping("/search/{keyword}/{id}")
-//    public ResponseEntity<Iterable<User>> findUserByKeywordInWorkspace(@PathVariable String keyword, @PathVariable Long id){
-//
-//    }
-
     @GetMapping("/{userId}/owned-boards")
     public ResponseEntity<Iterable<SimpleBoard>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(boardService.findAllOwnedBoardsByUserId(userId), HttpStatus.OK);
@@ -97,5 +93,8 @@ public class UserController {
     public ResponseEntity<Iterable<SimpleBoard>> findAllSharedBoardsByUserId(@PathVariable Long userId) {
         return new ResponseEntity<>(boardService.findAllSharedBoardsByUserId(userId), HttpStatus.OK);
     }
-
+    @GetMapping("search/{keyword}/{workspaceId}")
+    public ResponseEntity<Iterable<User>> showListMemberWorkspace(@PathVariable String keyword, @PathVariable Long workspaceId) {
+        return new ResponseEntity<>(userService.findByKeywordAndWorkspace(keyword, workspaceId), HttpStatus.OK);
+    }
 }

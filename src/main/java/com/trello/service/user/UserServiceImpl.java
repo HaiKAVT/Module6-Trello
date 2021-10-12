@@ -73,6 +73,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Iterable<User> findByKeywordAndWorkspace(String keyword, Long workspaceId) {
+        return userRepository.findByKeyword('%' + keyword + '%', workspaceId);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         return UserPrincipal.build(user);
