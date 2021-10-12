@@ -1,6 +1,8 @@
 package com.trello.controller;
 
+import com.trello.model.SimpleBoard;
 import com.trello.model.User;
+import com.trello.service.board.BoardService;
 import com.trello.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BoardService boardService;
 
     @GetMapping
     public ResponseEntity<Iterable<User>> findAll() {
@@ -76,6 +81,17 @@ public class UserController {
     public ResponseEntity<Iterable<User>> findUserByKeyword(@PathVariable String keyword) {
         Iterable<User> userIterable = userService.findUserByKeyword(keyword);
         return new ResponseEntity<>(userIterable, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{userId}/owned-boards")
+    public ResponseEntity<Iterable<SimpleBoard>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(boardService.findAllOwnedBoardsByUserId(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/shared-boards")
+    public ResponseEntity<Iterable<SimpleBoard>> findAllSharedBoardsByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(boardService.findAllSharedBoardsByUserId(userId), HttpStatus.OK);
     }
 
 }
