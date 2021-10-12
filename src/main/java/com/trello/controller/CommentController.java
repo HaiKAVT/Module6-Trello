@@ -45,7 +45,8 @@ public class CommentController {
 
     @PutMapping
     public ResponseEntity<Iterable<Comment>> saveAll(@RequestBody Iterable<Comment> comments) {
-        return new ResponseEntity<>(commentService.saveAll(comments), HttpStatus.OK);
+        Iterable<Comment> comment = commentService.saveAll(comments);
+        return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
