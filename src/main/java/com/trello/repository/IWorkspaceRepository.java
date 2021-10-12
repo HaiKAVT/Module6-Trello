@@ -14,11 +14,18 @@ public interface IWorkspaceRepository extends JpaRepository<Workspace, Long> {
             "      (select wm.workspace_id " +
             "       from workspace_members wm " +
             "                join member_workspace mw on wm.members_id = mw.id " +
-            "       where mw.user_id = ?1)")
+            "       where mw.user_id = ?1)" +
+            " order by w.title ")
     Iterable<Workspace> findAllByOwnerId(Long id);
+
     @Query(nativeQuery = true,
             value = "select count(*) " +
                     "from workspace_boards wb " +
                     "where wb.boards_id = ?1")
     Integer isBoardInWorkspace(Long boardId);
+
+    @Query(nativeQuery = true,
+    value = "select w.workspace_id from workspace_boards w " +
+            "where w.boards_id = ?1")
+    Long getWorkspaceByBoard(Long boardId);
 }

@@ -40,6 +40,12 @@ public class WorkspaceController {
         }
         return new ResponseEntity<>(workspacesOptional, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}/boards")
+    public ResponseEntity<Long> findWorkspaceByBoard(@PathVariable Long id){
+        Long workspaceId = workspaceService.getWorkspaceByBoard(id);
+        return new ResponseEntity<>(workspaceId, HttpStatus.OK);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Workspace> updateById(@PathVariable Long id, @RequestBody Workspace workspace){
         Optional<Workspace> workspacesOptional = workspaceService.findById(id);

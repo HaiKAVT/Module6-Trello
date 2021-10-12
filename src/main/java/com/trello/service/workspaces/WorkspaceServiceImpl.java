@@ -45,4 +45,9 @@ public class WorkspaceServiceImpl implements WorkspaceService{
         return false;
 
     }
+
+    @Override
+    public Long getWorkspaceByBoard(Long boardId) {
+        return workspaceRepository.getWorkspaceByBoard(boardId);
+    }
 }
