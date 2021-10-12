@@ -3,6 +3,8 @@ package com.trello.service.memberworkspace;
 import com.trello.model.MemberWorkspace;
 import com.trello.repository.MemberWorkspaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,5 +38,10 @@ public class MemberWorkspaceImpl implements MemberWorkspaceService{
     @Override
     public Iterable<MemberWorkspace> findByKeyword(String keyword, Long workspaceId) {
         return memberWorkspaceRepository.findByKeyword('%' + keyword + '%', workspaceId);
+    }
+
+    @Override
+    public Page<MemberWorkspace> findByWorkspace(Long workspaceId, Pageable pageable) {
+        return memberWorkspaceRepository.findAllByWorkspace(workspaceId, pageable);
     }
 }
