@@ -4,7 +4,7 @@ import com.trello.model.JwtResponse;
 import com.trello.model.Payload.LoginRequest;
 import com.trello.model.User;
 import com.trello.service.JwtService;
-import com.trello.service.email.EmailService;
+
 import com.trello.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.mail.MessagingException;
+
 
 @CrossOrigin("*")
 @RestController
@@ -34,8 +34,7 @@ public class AuthController {
     private UserServiceImpl userService;
     @Autowired
     PasswordEncoder encoder;
-//    @Autowired
-//    EmailService emailService;
+
 
     @PostMapping("/login")
     private ResponseEntity<?> login(@RequestBody LoginRequest user) {
