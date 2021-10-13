@@ -1,17 +1,20 @@
 package com.trello.controller;
 
-import com.trello.model.Board;
-import com.trello.model.DetailedMember;
-import com.trello.model.Member;
-import com.trello.model.SimpleBoard;
+import com.trello.model.*;
 import com.trello.service.board.BoardService;
 import com.trello.service.member.IMemberService;
 import com.trello.service.workspaces.WorkspaceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -77,10 +80,20 @@ public class BoardController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/available-to/{searcherId}")
-    public ResponseEntity<Iterable<Board>> findAllAvailableToSearcher(@PathVariable Long searcherId) {
-        Iterable<Board> boardIterable = boardService.findAllAvailableToSearcher(searcherId);
-        return new ResponseEntity<>(boardIterable, HttpStatus.OK);
+    @GetMapping("/available-to/{searcherId}/{keyword}")
+    public ResponseEntity<Map<String, Object>> findAllAvailableToSearcher(@PathVariable Long searcherId,
+                                                                      @PathVariable String keyword,
+                                                                      @RequestParam(defaultValue = "0") int page,
+                                                                      @RequestParam(defaultValue = "10") int size) {
+        Pageable paging = PageRequest.of(page,size);
+        Page<Board> boardPage = boardService.findAllAvailableToSearcher(searcherId,keyword,paging);
+        List<Board> boardPageContent = boardPage.getContent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("boards",boardPageContent);
+        response.put("currentPage",boardPage.getNumber());
+        response.put("totalItems",boardPage.getTotalElements());
+        response.put("totalPages",boardPage.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/{userId}/owned-boards")
     public ResponseEntity<Iterable<Board>> findAllOwnedBoardsByUserId(@PathVariable Long userId) {
@@ -98,6 +111,12 @@ public class BoardController {
     public ResponseEntity<Boolean> isBoardInWorkspace(@PathVariable Long id) {
         return new ResponseEntity<>(workspaceService.isBoardInWorkspace(id), HttpStatus.OK);
     }
-
+    @PostMapping("/delete")
+    public ResponseEntity<MemberWorkspace> deleteAllById(@RequestBody Iterable<Board> boards) {
+        for (Board board : boards) {
+            boardService.deleteById(board.getId());
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

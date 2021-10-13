@@ -1,8 +1,11 @@
 package com.trello.service.card;
 
+import com.trello.model.Board;
 import com.trello.model.Card;
 import com.trello.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,5 +36,9 @@ cardRepository.deleteById(id);
     @Override
     public Iterable<Card> saveAll(Iterable<Card> cards) {
         return cardRepository.saveAll(cards);
+    }
+
+    public Page<Card> findAllAvailableToSearcher(Long searcherId, Pageable pageable){
+        return cardRepository.findAllAvailableToSearcher(searcherId, pageable);
     }
 }

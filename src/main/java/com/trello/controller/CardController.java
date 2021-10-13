@@ -1,12 +1,19 @@
 package com.trello.controller;
 
+import com.trello.model.Board;
 import com.trello.model.Card;
 import com.trello.service.card.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -61,5 +68,20 @@ public class CardController {
             cardService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/available-to/{searcherId}")
+    public ResponseEntity<Map<String, Object>> findAllAvailableToSearcher(@PathVariable Long searcherId,
+                                                                          @RequestParam(defaultValue = "0") int page,
+                                                                          @RequestParam(defaultValue = "10") int size) {
+        Pageable paging = PageRequest.of(page,size);
+        Page<Card> boardPage = cardService.findAllAvailableToSearcher(searcherId,paging);
+        List<Card> boardPageContent = boardPage.getContent();
+        Map<String, Object> response = new HashMap<>();
+        response.put("boards",boardPageContent);
+        response.put("currentPage",boardPage.getNumber());
+        response.put("totalItems",boardPage.getTotalElements());
+        response.put("totalPages",boardPage.getTotalPages());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

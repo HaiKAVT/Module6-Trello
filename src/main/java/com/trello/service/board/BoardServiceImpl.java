@@ -3,6 +3,8 @@ package com.trello.service.board;
 import com.trello.model.*;
 import com.trello.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -47,8 +49,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Iterable<Board> findAllAvailableToSearcher(Long searcherId) {
-        return iBoardRepository.findAllAvailableToSearcher(searcherId);
+    public Page<Board> findAllAvailableToSearcher(Long searcherId, String keyword, Pageable pageable) {
+        return iBoardRepository.findAllAvailableToSearcher(searcherId, '%' + keyword + '%', pageable);
     }
 
     @Override
