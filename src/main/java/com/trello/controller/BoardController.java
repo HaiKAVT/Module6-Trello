@@ -105,6 +105,8 @@ public class BoardController {
     public ResponseEntity<Iterable<DetailedMember>> findMembersByBoardId(@PathVariable Long id) {
         return new ResponseEntity<>(memberService.getMembersByBoardId(id), HttpStatus.OK);
     }
+
+
     @Autowired
     private WorkspaceService workspaceService;
     @GetMapping("/{id}/is-in-workspace")
