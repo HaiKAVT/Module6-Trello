@@ -3,12 +3,15 @@ package com.trello.repository;
 import com.trello.model.Board;
 import com.trello.model.SimpleBoard;
 import com.trello.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BoardRepository extends JpaRepository<Board,Long> {
+public interface BoardRepository extends PagingAndSortingRepository<Board,Long> {
     Iterable<Board> findAllByOwner(User owner);
     Iterable<Board> findByOwnerId(Long id);
 
@@ -22,8 +25,13 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
     Iterable<SimpleBoard> findAllSharedBoardsByUserId(Long userId);
 
     @Query(value = "select * from board b " +
-            "where ((b.owner_id = ?1) or (b.id in (select m.board_id from member m where m.user_id = ?1))) ", nativeQuery = true)
-    Iterable<Board> findAllAvailableToSearcher(Long searcherId);
+            "join board_columns bc on b.id = bc.board_id " +
+            "join columns c on bc.columns_id = c.id " +
+            "join columns_cards cc on cc.column_id = c.id " +
+            "join card cr on cc.cards_id = cr.id  " +
+            "where ((b.owner_id = ?1) or (b.id in (select m.board_id from member m where m.user_id = ?1)))" +
+            " and ((cr.content like ?2) or cr.title like ?2)", nativeQuery = true)
+    Page<Board> findAllAvailableToSearcher(Long searcherId,String keyword, Pageable pageable);
 
     Iterable<Board> findByType (String type);
     Iterable<Board> findByTypeAndAndOwnerId (String type, Long id);

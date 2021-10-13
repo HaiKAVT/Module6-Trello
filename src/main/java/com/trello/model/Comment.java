@@ -16,7 +16,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Member member;
+    private User user;
     private String content;
     @ManyToOne
     private Card card;

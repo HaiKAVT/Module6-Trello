@@ -32,10 +32,9 @@ public class CommentController {
     }
 
     @GetMapping("/comment-card/{id}")
-    public ResponseEntity<Iterable<Comment>> findAllCommentByCardId(@PathVariable Long cardId) {
-        return new ResponseEntity<>(commentService.findAllCommentByCardId(cardId), HttpStatus.OK);
+    public ResponseEntity<Iterable<Comment>> findAllCommentByCardId(@PathVariable Long id) {
+        return new ResponseEntity<>(commentService.findAllCommentByCardId(id), HttpStatus.OK);
     }
-
 
     @PostMapping
     public ResponseEntity<Comment> save(@RequestBody Comment comment) {
