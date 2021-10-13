@@ -23,4 +23,6 @@ public class ActivityLog {
     private Board board;
     @ManyToOne
     private Card card;
+    @ManyToOne
+    private User user;
 }
