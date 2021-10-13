@@ -21,4 +21,6 @@ public class Notification {
     private boolean status;
     @ManyToMany
     private List<User> receiver;
+    @ManyToOne
+    private User user;
 }
