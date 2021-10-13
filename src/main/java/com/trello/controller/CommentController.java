@@ -36,7 +36,6 @@ public class CommentController {
         return new ResponseEntity<>(commentService.findAllCommentByCardId(id), HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<Comment> save(@RequestBody Comment comment) {
         Comment comment1 = commentService.save(comment);
