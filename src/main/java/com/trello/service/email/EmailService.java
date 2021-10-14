@@ -25,7 +25,7 @@ public class EmailService {
         String mailContent = "<p>Dear " + user.getUsername() + ",</p>";
         mailContent += "<p> Bạn đã được " + sender.getUsername() + " mời vào nhóm " + workspace.getTitle();
         mailContent += "<br><a href ='http://localhost:4200/login'> Đăng nhập </a>vào hệ thống " ;
-        mailContent += "và truy cập vào nhóm tại <a href='http://localhost:4200/workspaces/"+workspace.getId()+"/home'>đây</a> ";
+        mailContent += "và truy cập vào nhóm tại <a href='https://h3ktrello.netlify.app/workspaces/"+workspace.getId()+"/home'>đây</a> ";
         mailContent += "</p>";
 
         MimeMessage message = mailSender.createMimeMessage();
