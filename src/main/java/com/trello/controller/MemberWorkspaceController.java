@@ -1,9 +1,11 @@
 package com.trello.controller;
 
 import com.trello.model.MemberWorkspace;
+import com.trello.model.User;
 import com.trello.model.Workspace;
 import com.trello.service.email.EmailService;
 import com.trello.service.memberworkspace.MemberWorkspaceService;
+import com.trello.service.user.UserService;
 import com.trello.service.workspaces.WorkspaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,17 +31,21 @@ public class MemberWorkspaceController {
 
     @Autowired
     private MemberWorkspaceService memberWorkspaceService;
-
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private WorkspaceService workspaceService;
 
     @GetMapping("")
     public ResponseEntity<Iterable<MemberWorkspace>> showListTag() {
         return new ResponseEntity<>(memberWorkspaceService.findAll(), HttpStatus.OK);
     }
-    @PostMapping("")
-    public ResponseEntity<MemberWorkspace> saveTag(@RequestBody MemberWorkspace memberWorkspace) {
-
+    @PostMapping("/{senderId}/{workspaceId}")
+    public ResponseEntity<MemberWorkspace> saveTag(@PathVariable Long senderId, @PathVariable Long workspaceId, @RequestBody MemberWorkspace memberWorkspace) {
         try {
-            emailService.sendVerificationEmail(memberWorkspace.getUser());
+            User sender = userService.findById(senderId).get();
+            Workspace workspace = workspaceService.findById(workspaceId).get();
+            emailService.sendVerificationEmail(memberWorkspace.getUser(),sender,workspace);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

@@ -18,13 +18,15 @@ public class EmailService {
 
     @Autowired
     UserService userService;
-    public void sendVerificationEmail(User user)
+    public void sendVerificationEmail(User user, User sender, Workspace workspace)
             throws MessagingException {
-        String subject = "Register notification";
+        String subject = "Lời mời cộng tác";
         String senderName = "admin";
         String mailContent = "<p>Dear " + user.getUsername() + ",</p>";
-        mailContent += "<p> Bạn đã được một người bạn mời vào nhóm ";
-        mailContent += "<a href ='http://localhost:4200/login'> Bấm vào đây để đăng nhập ! </a> </p>" ;
+        mailContent += "<p> Bạn đã được " + sender.getUsername() + " mời vào nhóm " + workspace.getTitle();
+        mailContent += "<br><a href ='http://localhost:4200/login'> Đăng nhập </a>vào hệ thống " ;
+        mailContent += "và truy cập vào nhóm tại <a href='http://localhost:4200/workspaces/"+workspace.getId()+"/home'>đây</a> ";
+        mailContent += "</p>";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
